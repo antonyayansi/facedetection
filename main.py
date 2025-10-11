@@ -7,7 +7,6 @@ from PIL import Image
 
 app = FastAPI(title="Tukuy Obra Face API")
 
-# 1️⃣ Obtener descriptor facial
 @app.post("/encode-face")
 async def encode_face(image: UploadFile = File(...)):
     img_bytes = await image.read()
@@ -20,8 +19,6 @@ async def encode_face(image: UploadFile = File(...)):
     # Devolver el descriptor (lista de 128 floats)
     return {"descriptor": faces[0].tolist()}
 
-
-# 2️⃣ Comparar imagen con descriptor
 @app.post("/compare-face")
 async def compare_face(
     descriptor: str = Form(...), # "[-0.12922652065410156, 0.03412323498725891, ...]"
