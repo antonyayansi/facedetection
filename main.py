@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, UploadFile, Form
+from fastapi.middleware.cors import CORSMiddleware
 import face_recognition
 import numpy as np
 import json
@@ -6,6 +7,15 @@ import io
 from PIL import Image
 
 app = FastAPI(title="Tukuy Obra Face API")
+
+# 🔓 Configuración CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Puedes poner ["http://localhost:5178"] si quieres más seguridad
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/encode-face")
 async def encode_face(image: UploadFile = File(...)):
